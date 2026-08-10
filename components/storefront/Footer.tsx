@@ -2,11 +2,18 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useApp } from '@/lib/store';
 import { MapPin, Mail, Phone } from 'lucide-react';
 
 export default function Footer() {
+  const pathname = usePathname();
   const { settings } = useApp();
+
+  // Hide customer Footer completely when on Admin portal pages
+  if (pathname.startsWith('/admin')) {
+    return null;
+  }
 
   return (
     <footer className="bg-noir-950 border-t border-gold-600/20 text-neutral-400 font-sans pt-16 pb-12">

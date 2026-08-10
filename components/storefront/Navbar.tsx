@@ -13,6 +13,11 @@ export default function Navbar() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
+  // Hide customer Navbar completely when on Admin portal pages
+  if (pathname.startsWith('/admin')) {
+    return null;
+  }
+
   const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
 
   const navLinks = [

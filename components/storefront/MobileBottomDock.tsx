@@ -10,6 +10,11 @@ export default function MobileBottomDock() {
   const pathname = usePathname();
   const { cart, setIsCartOpen } = useApp();
 
+  // Hide mobile bottom dock completely when on Admin portal pages
+  if (pathname.startsWith('/admin')) {
+    return null;
+  }
+
   const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
 
   const dockItems = [

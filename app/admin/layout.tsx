@@ -4,12 +4,12 @@ import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useApp } from '@/lib/store';
-import { Crown, LayoutDashboard, Package, ShoppingCart, Sliders, ExternalLink, LogOut, Sparkles } from 'lucide-react';
+import { Crown, LayoutDashboard, Package, ShoppingCart, Sliders, ExternalLink, LogOut } from 'lucide-react';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
-  const { isAdminLoggedIn, adminLogout } = useApp();
+  const { isAdminLoggedIn, adminLogout, settings } = useApp();
 
   const isLoginPage = pathname === '/admin/login';
 
@@ -42,21 +42,25 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   return (
     <div className="min-h-screen bg-noir-950 text-neutral-100 flex flex-col">
       
-      {/* Top Admin Navigation Header */}
-      <header className="bg-noir-900 border-b border-gold-600/20 sticky top-20 z-30">
+      {/* Top Admin Navigation Header (Docked at top-0) */}
+      <header className="bg-noir-900 border-b border-gold-600/20 sticky top-0 z-30 shadow-xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             
-            {/* Brand Title */}
+            {/* Brand Title & Logo */}
             <div className="flex items-center gap-3">
               <img
-                src="/logo.png"
-                alt="Annex Couture Logo"
+                src={settings.brandLogoUrl || '/logo.png'}
+                alt={settings.companyName || 'Annex Couture Logo'}
                 className="h-8 w-auto object-contain drop-shadow-[0_0_8px_rgba(234,179,8,0.3)]"
               />
               <div>
-                <span className="font-serif text-sm tracking-[0.2em] font-medium text-neutral-100 block">ANNEX ADMIN</span>
-                <span className="text-[9px] text-gold-400 uppercase tracking-widest block font-sans">Brand Management Portal</span>
+                <span className="font-serif text-sm tracking-[0.2em] font-medium text-neutral-100 block">
+                  {settings.companyName || 'ANNEX'} ADMIN
+                </span>
+                <span className="text-[9px] text-gold-400 uppercase tracking-widest block font-sans">
+                  Brand Management Portal
+                </span>
               </div>
             </div>
 
@@ -65,7 +69,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               <Link
                 href="/"
                 target="_blank"
-                className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-noir-950 border border-gold-600/20 text-neutral-300 hover:text-gold-300 transition-colors"
+                className="hidden sm:flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-noir-950 border border-gold-600/30 text-neutral-200 hover:text-gold-300 transition-colors"
               >
                 <span>View Customer Webpage</span>
                 <ExternalLink className="w-3.5 h-3.5 text-gold-400" />
@@ -76,7 +80,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                   adminLogout();
                   router.push('/admin/login');
                 }}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-950/40 border border-red-500/30 text-red-300 hover:bg-red-900/60 transition-colors"
+                className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-red-950/40 border border-red-500/30 text-red-300 hover:bg-red-900/60 transition-colors"
               >
                 <LogOut className="w-3.5 h-3.5" />
                 <span className="hidden sm:inline">Logout</span>
