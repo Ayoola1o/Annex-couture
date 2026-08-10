@@ -157,7 +157,7 @@ export default function AdminProductsPage() {
 
         <button
           onClick={handleOpenAdd}
-          className="gold-shimmer-btn px-6 py-3 rounded-xl text-xs font-bold uppercase tracking-widest flex items-center gap-2 shadow-lg shrink-0"
+          className="w-full sm:w-auto gold-shimmer-btn px-6 py-3 rounded-xl text-xs font-bold uppercase tracking-widest flex items-center justify-center gap-2 shadow-lg shrink-0"
         >
           <Plus className="w-4 h-4" />
           <span>Add New Product</span>
@@ -197,8 +197,60 @@ export default function AdminProductsPage() {
         </div>
       </div>
 
-      {/* Table List of Products */}
-      <div className="bg-noir-900 border border-gold-600/20 rounded-3xl overflow-hidden shadow-2xl">
+      {/* Mobile Grid View (< 768px) */}
+      <div className="grid grid-cols-1 gap-4 md:hidden">
+        {filteredProducts.map((prod) => (
+          <div key={prod.id} className="p-4 rounded-2xl bg-noir-900 border border-gold-600/20 space-y-3">
+            <div className="flex items-center gap-3">
+              <img src={prod.image} alt={prod.name} className="w-14 h-16 rounded-xl object-cover bg-noir-950 border border-white/10 shrink-0" />
+              <div className="flex-1 min-w-0">
+                <span className="font-serif text-base text-neutral-100 font-medium truncate block">{prod.name}</span>
+                <span className="text-[10px] text-neutral-400 block">{prod.category} • ID: {prod.id}</span>
+                <span className="font-serif text-sm font-semibold text-gold-400">${prod.price.toLocaleString()}</span>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between pt-2 border-t border-white/5 text-xs">
+              <div className="flex items-center gap-2">
+                <span className="text-neutral-400">Stock:</span>
+                <button
+                  onClick={() => updateProduct(prod.id, { stock: Math.max(0, prod.stock - 1) })}
+                  className="px-2 py-0.5 rounded bg-noir-950 border border-neutral-800 text-neutral-300"
+                >
+                  -
+                </button>
+                <span className="font-mono font-bold text-gold-300">{prod.stock}</span>
+                <button
+                  onClick={() => updateProduct(prod.id, { stock: prod.stock + 1 })}
+                  className="px-2 py-0.5 rounded bg-noir-950 border border-neutral-800 text-neutral-300"
+                >
+                  +
+                </button>
+              </div>
+
+              <div className="flex gap-2">
+                <button
+                  onClick={() => handleOpenEdit(prod)}
+                  className="p-2 bg-noir-950 border border-gold-600/20 text-gold-300 rounded-lg text-xs"
+                >
+                  <Edit className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  onClick={() => {
+                    if (confirm(`Delete "${prod.name}"?`)) deleteProduct(prod.id);
+                  }}
+                  className="p-2 bg-noir-950 border border-red-500/20 text-red-400 rounded-lg text-xs"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Desktop Table View (>= 768px) */}
+      <div className="hidden md:block bg-noir-900 border border-gold-600/20 rounded-3xl overflow-hidden shadow-2xl">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs">
             <thead>

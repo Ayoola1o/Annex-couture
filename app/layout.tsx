@@ -6,6 +6,7 @@ import Footer from '@/components/storefront/Footer';
 import CartDrawer from '@/components/storefront/CartDrawer';
 import QuickViewModal from '@/components/storefront/QuickViewModal';
 import Toast from '@/components/storefront/Toast';
+import MobileBottomDock from '@/components/storefront/MobileBottomDock';
 
 export const metadata: Metadata = {
   title: 'Annex Couture | Haute Couture & Luxury Apparel',
@@ -23,10 +24,11 @@ export default function RootLayout({
       <body className="bg-noir-950 text-neutral-100 min-h-screen flex flex-col font-sans selection:bg-gold-500 selection:text-noir-950">
         <AppProvider>
           <Navbar />
-          <main className="flex-1">{children}</main>
+          <main className="flex-1 pb-16 sm:pb-0">{children}</main>
           <Footer />
           <CartDrawer />
           <QuickViewModal />
+          <MobileBottomDock />
           <Toast />
         </AppProvider>
       </body>

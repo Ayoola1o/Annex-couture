@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useApp } from '@/lib/store';
 import { ProductCategory, Product } from '@/lib/types';
-import { Search, SlidersHorizontal, Eye, ShoppingBag, Sparkles, Filter, X } from 'lucide-react';
+import { Search, SlidersHorizontal, Eye, ShoppingBag, Filter, X, ChevronDown, Check } from 'lucide-react';
 
 function ShopContent() {
   const searchParams = useSearchParams();
@@ -15,6 +15,7 @@ function ShopContent() {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [sortBy, setSortBy] = useState<'featured' | 'price-low' | 'price-high'>('featured');
   const [priceMax, setPriceMax] = useState<number>(5000);
+  const [mobileFilterOpen, setMobileFilterOpen] = useState<boolean>(false);
 
   // Sync category or search query from URL params on load
   useEffect(() => {
@@ -44,11 +45,11 @@ function ShopContent() {
   });
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-10">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8 sm:space-y-10">
       
       {/* Header Banner */}
-      <div className="text-center space-y-4 max-w-2xl mx-auto">
-        <span className="text-xs uppercase tracking-[0.3em] text-gold-400 font-semibold block">
+      <div className="text-center space-y-3 sm:space-y-4 max-w-2xl mx-auto">
+        <span className="text-[11px] sm:text-xs uppercase tracking-[0.3em] text-gold-400 font-semibold block">
           Annex Atelier Catalog
         </span>
         <h1 className="font-serif text-3xl sm:text-5xl text-neutral-100 font-light gold-gradient-text">
@@ -59,7 +60,7 @@ function ShopContent() {
         </p>
       </div>
 
-      {/* Category Tab Filter Pills */}
+      {/* Category Tab Filter Pills (Scrollable on Desktop & Mobile) */}
       <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none justify-start lg:justify-center">
         {categories.map((cat) => (
           <button
@@ -87,7 +88,7 @@ function ShopContent() {
             placeholder="Search catalog by keyword..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-noir-950 border border-gold-600/20 rounded-xl py-2 pl-10 pr-8 text-xs text-neutral-100 placeholder-neutral-500 focus:outline-none focus:border-gold-400"
+            className="w-full bg-noir-950 border border-gold-600/20 rounded-xl py-2.5 pl-10 pr-8 text-xs text-neutral-100 placeholder-neutral-500 focus:outline-none focus:border-gold-400"
           />
           {searchQuery && (
             <button
@@ -99,7 +100,17 @@ function ShopContent() {
           )}
         </div>
 
-        <div className="flex flex-wrap items-center gap-4 w-full md:w-auto justify-between md:justify-end">
+        {/* Mobile Filter Button Trigger (< 768px) */}
+        <button
+          onClick={() => setMobileFilterOpen(true)}
+          className="w-full md:hidden flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-gold-600/10 border border-gold-500/30 text-gold-300 text-xs uppercase font-bold tracking-wider"
+        >
+          <SlidersHorizontal className="w-4 h-4 text-gold-400" />
+          <span>Filter & Sort Options</span>
+        </button>
+
+        {/* Desktop Filters (>= 768px) */}
+        <div className="hidden md:flex flex-wrap items-center gap-6">
           {/* Price Range Filter */}
           <div className="flex items-center gap-3 text-xs text-neutral-300">
             <span>Max Price:</span>
@@ -110,7 +121,7 @@ function ShopContent() {
               step="100"
               value={priceMax}
               onChange={(e) => setPriceMax(Number(e.target.value))}
-              className="accent-gold-500 cursor-pointer w-28 sm:w-36"
+              className="accent-gold-500 cursor-pointer w-36"
             />
             <span className="font-mono text-gold-400 font-semibold">${priceMax.toLocaleString()}</span>
           </div>
@@ -154,11 +165,11 @@ function ShopContent() {
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {filteredProducts.map((product) => (
             <div
               key={product.id}
-              className="group bg-noir-900 border border-gold-600/15 rounded-2xl overflow-hidden hover:border-gold-500/40 transition-all flex flex-col justify-between"
+              className="group bg-noir-900 border border-gold-600/15 rounded-2xl overflow-hidden hover:border-gold-500/40 transition-all flex flex-col justify-between shadow-xl"
             >
               {/* Product Image */}
               <div className="relative aspect-[3/4] bg-noir-950 overflow-hidden">
@@ -174,8 +185,8 @@ function ShopContent() {
                   </span>
                 )}
 
-                {/* Hover Quick Action overlay */}
-                <div className="absolute inset-0 bg-noir-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+                {/* Quick Action Buttons */}
+                <div className="absolute inset-0 bg-noir-950/40 opacity-0 group-hover:opacity-100 sm:group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
                   <button
                     onClick={() => setQuickViewProduct(product)}
                     className="p-3 bg-noir-900/90 text-neutral-200 hover:text-gold-400 rounded-full border border-gold-600/30 backdrop-blur-md transition-transform hover:scale-110"
@@ -224,7 +235,7 @@ function ShopContent() {
 
                   <button
                     onClick={() => addToCart(product, product.sizes[0], product.colors[0])}
-                    className="text-xs uppercase tracking-wider text-neutral-300 hover:text-gold-300 font-semibold flex items-center gap-1"
+                    className="px-3 py-1.5 rounded-lg bg-gold-600/10 border border-gold-500/30 text-gold-300 hover:bg-gold-500/20 text-xs uppercase tracking-wider font-semibold flex items-center gap-1 transition-all"
                   >
                     <span>+ Add</span>
                   </button>
@@ -233,6 +244,59 @@ function ShopContent() {
 
             </div>
           ))}
+        </div>
+      )}
+
+      {/* Mobile Slide-Up Filter Drawer */}
+      {mobileFilterOpen && (
+        <div className="fixed inset-0 z-50 md:hidden">
+          <div className="fixed inset-0 bg-noir-950/80 backdrop-blur-sm" onClick={() => setMobileFilterOpen(false)} />
+          <div className="fixed inset-x-0 bottom-0 bg-noir-900 border-t border-gold-600/30 rounded-t-3xl p-6 space-y-6 shadow-2xl animate-slide-up">
+            <div className="flex justify-between items-center border-b border-gold-600/20 pb-3">
+              <h3 className="font-serif text-lg text-neutral-100 font-medium">Filter & Sort Options</h3>
+              <button onClick={() => setMobileFilterOpen(false)} className="text-neutral-400 hover:text-white p-1">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-xs text-neutral-300 font-medium mb-2">Maximum Price</label>
+                <div className="flex items-center gap-3">
+                  <input
+                    type="range"
+                    min="500"
+                    max="5000"
+                    step="100"
+                    value={priceMax}
+                    onChange={(e) => setPriceMax(Number(e.target.value))}
+                    className="accent-gold-500 flex-1"
+                  />
+                  <span className="font-mono text-gold-400 font-bold text-sm">${priceMax.toLocaleString()}</span>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs text-neutral-300 font-medium mb-2">Sort Order</label>
+                <select
+                  value={sortBy}
+                  onChange={(e: any) => setSortBy(e.target.value)}
+                  className="w-full bg-noir-950 border border-gold-600/30 rounded-xl p-3 text-xs text-neutral-100 focus:outline-none focus:border-gold-400"
+                >
+                  <option value="featured">Featured First</option>
+                  <option value="price-low">Price: Low to High</option>
+                  <option value="price-high">Price: High to Low</option>
+                </select>
+              </div>
+            </div>
+
+            <button
+              onClick={() => setMobileFilterOpen(false)}
+              className="w-full gold-shimmer-btn py-3.5 rounded-xl text-xs uppercase font-bold tracking-widest shadow-xl"
+            >
+              Apply Filters ({filteredProducts.length} Items)
+            </button>
+          </div>
         </div>
       )}
 
