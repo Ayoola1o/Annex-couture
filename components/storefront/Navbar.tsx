@@ -63,13 +63,20 @@ export default function Navbar() {
 
           {/* Brand Logo */}
           <div className="flex-1 lg:flex-none text-center lg:text-left">
-            <Link href="/" className="inline-block group">
-              <span className="font-serif text-2xl sm:text-3xl tracking-[0.25em] font-light text-neutral-100 group-hover:text-gold-400 transition-colors">
-                ANNEX
-              </span>
-              <span className="block text-[9px] tracking-[0.4em] text-gold-500 font-sans uppercase -mt-1 font-semibold">
-                Couture • Paris
-              </span>
+            <Link href="/" className="inline-flex items-center gap-3 group">
+              <img
+                src="/logo.png"
+                alt="Annex Couture Logo"
+                className="h-11 sm:h-12 w-auto object-contain group-hover:scale-105 transition-transform drop-shadow-[0_0_10px_rgba(234,179,8,0.2)]"
+              />
+              <div className="hidden sm:block text-left">
+                <span className="font-serif text-xl sm:text-2xl tracking-[0.2em] font-light text-neutral-100 group-hover:text-gold-400 transition-colors block leading-none">
+                  ANNEX
+                </span>
+                <span className="block text-[8px] tracking-[0.35em] text-gold-500 font-sans uppercase font-semibold mt-0.5">
+                  Couture • Paris
+                </span>
+              </div>
             </Link>
           </div>
 

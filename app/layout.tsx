@@ -12,6 +12,11 @@ export const metadata: Metadata = {
   title: 'Annex Couture | Haute Couture & Luxury Apparel',
   description: 'Exquisite haute couture, tailored evening gowns, bespoke suits, and luxury accessories by Annex Couture. Experience Paris & New York atelier elegance.',
   keywords: ['Annex Couture', 'Haute Couture', 'Luxury Fashion', 'Bespoke Tailoring', 'Evening Gowns'],
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/icon.png',
+    shortcut: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({

@@ -49,9 +49,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             
             {/* Brand Title */}
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-gold-600/20 border border-gold-500/40 text-gold-400 flex items-center justify-center">
-                <Crown className="w-4 h-4" />
-              </div>
+              <img
+                src="/logo.png"
+                alt="Annex Couture Logo"
+                className="h-8 w-auto object-contain drop-shadow-[0_0_8px_rgba(234,179,8,0.3)]"
+              />
               <div>
                 <span className="font-serif text-sm tracking-[0.2em] font-medium text-neutral-100 block">ANNEX ADMIN</span>
                 <span className="text-[9px] text-gold-400 uppercase tracking-widest block font-sans">Brand Management Portal</span>

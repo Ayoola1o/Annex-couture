@@ -17,9 +17,16 @@ export default function Footer() {
           
           {/* Brand Info */}
           <div className="space-y-4">
-            <Link href="/" className="inline-block">
-              <span className="font-serif text-2xl tracking-[0.25em] text-neutral-100 font-light">ANNEX</span>
-              <span className="block text-[9px] tracking-[0.4em] text-gold-500 font-sans uppercase">COUTURE</span>
+            <Link href="/" className="inline-flex items-center gap-3 group">
+              <img
+                src="/logo.png"
+                alt="Annex Couture Logo"
+                className="h-10 w-auto object-contain group-hover:scale-105 transition-transform"
+              />
+              <div>
+                <span className="font-serif text-xl tracking-[0.2em] text-neutral-100 font-light block leading-none">ANNEX</span>
+                <span className="block text-[8px] tracking-[0.35em] text-gold-500 font-sans uppercase font-semibold mt-0.5">COUTURE</span>
+              </div>
             </Link>
             <p className="text-xs text-neutral-400 leading-relaxed max-w-sm">
               {settings.brandStoryText}

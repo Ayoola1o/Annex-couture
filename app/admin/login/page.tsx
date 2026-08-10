@@ -29,9 +29,11 @@ export default function AdminLoginPage() {
         <div className="absolute -top-24 -right-24 w-48 h-48 rounded-full bg-gold-600/10 blur-3xl pointer-events-none" />
 
         <div className="text-center space-y-3">
-          <div className="w-14 h-14 rounded-full bg-gold-600/20 border border-gold-500/40 text-gold-400 flex items-center justify-center mx-auto shadow-lg">
-            <Crown className="w-7 h-7" />
-          </div>
+          <img
+            src="/logo.png"
+            alt="Annex Couture Logo"
+            className="w-16 h-16 object-contain mx-auto drop-shadow-[0_0_12px_rgba(234,179,8,0.3)]"
+          />
           <div>
             <span className="font-serif text-2xl tracking-[0.2em] font-light text-neutral-100 block">ANNEX COUTURE</span>
             <span className="text-[10px] uppercase tracking-[0.3em] text-gold-400 font-semibold">Brand Admin Portal</span>
