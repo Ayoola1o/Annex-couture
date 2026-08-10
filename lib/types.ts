@@ -71,6 +71,11 @@ export interface AtelierCategoryCard {
   category: ProductCategory;
 }
 
+export interface AboutPillar {
+  title: string;
+  description: string;
+}
+
 export interface StoreSettings {
   companyName: string;
   companyTagline: string;
@@ -84,6 +89,13 @@ export interface StoreSettings {
   founderTitle: string;
   founderBio: string;
   founderPhotoUrl: string;
+  aboutHeroTitle: string;
+  aboutHeroSubtitle: string;
+  aboutHeroImageUrl: string;
+  aboutPhilosophyTitle: string;
+  aboutPhilosophyBody: string;
+  aboutCraftsmanshipImageUrl: string;
+  aboutPillars: AboutPillar[];
   announcementActive: boolean;
   contactEmail: string;
   contactPhone: string;

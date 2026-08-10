@@ -227,6 +227,26 @@ export const INITIAL_SETTINGS: StoreSettings = {
   founderTitle: 'Founder & Creative Director',
   founderBio: 'Envisioned by Ayoola Adebisi, Annex Couture bridges classical Parisian tailoring techniques with modern sculptural silhouettes. With a commitment to rare textiles, bespoke fits, and timeless prestige, Ayoola leads an international team of master artisans based in Paris and West Africa.',
   founderPhotoUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80',
+  aboutHeroTitle: 'The World of Annex Couture',
+  aboutHeroSubtitle: 'Where Parisian haute couture heritage meets modern architectural power. Crafted for visionaries who command prestige.',
+  aboutHeroImageUrl: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=2000&q=90',
+  aboutPhilosophyTitle: 'Individually Sculpted to Accentuate Grace, Power, and Prestige',
+  aboutPhilosophyBody: 'Every garment carrying the Annex Couture signature undergoes hundreds of hours of precision hand-stitching, structural boning, and intricate beadwork. We do not mass-produce; we sculpt wearable art designed to endure through generations.',
+  aboutCraftsmanshipImageUrl: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1000&q=80',
+  aboutPillars: [
+    {
+      title: 'Bespoke Fit Proportions',
+      description: 'Every client\'s measurements are recorded to build a custom dress form, ensuring micro-millimeter precision fit.'
+    },
+    {
+      title: 'Ethical Sourcing',
+      description: 'We partner exclusively with historic silk mills in Como, Italy and sustainable wool weavers in Huddersfield, England.'
+    },
+    {
+      title: 'White-Glove Dispatch',
+      description: 'Garments are dispatched in padded garment bags with temperature-controlled shipping and worldwide courier tracking.'
+    }
+  ],
   announcementActive: true,
   contactEmail: 'ayoolaadebisi5@gmail.com',
   contactPhone: '+234 810 236 3541',

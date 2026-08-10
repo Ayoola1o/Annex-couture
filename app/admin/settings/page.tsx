@@ -3,9 +3,9 @@
 import React, { useState } from 'react';
 import { useApp } from '@/lib/store';
 import ImageUploader from '@/components/admin/ImageUploader';
-import { ProductCategory, AtelierCategoryCard } from '@/lib/types';
+import { ProductCategory, AtelierCategoryCard, AboutPillar } from '@/lib/types';
 import { INITIAL_ATELIER_CATEGORIES } from '@/lib/data';
-import { Sliders, Save, Sparkles, Image as ImageIcon, MapPin, Mail, Phone, Eye, Grid, Plus, Trash2, User, Crown, Tag, Edit2, AlertTriangle, X, Check } from 'lucide-react';
+import { Sliders, Save, Sparkles, Image as ImageIcon, MapPin, Mail, Phone, Eye, Grid, Plus, Trash2, User, Crown, Tag, Edit2, AlertTriangle, X, Check, BookOpen } from 'lucide-react';
 
 export default function AdminSettingsPage() {
   const { settings, updateSettings, categories, addCategory, renameCategory, deleteCategory, products } = useApp();
@@ -27,6 +27,23 @@ export default function AdminSettingsPage() {
   const [founderTitle, setFounderTitle] = useState(settings.founderTitle || 'Founder & Creative Director');
   const [founderBio, setFounderBio] = useState(settings.founderBio || '');
   const [founderPhotoUrl, setFounderPhotoUrl] = useState(settings.founderPhotoUrl || '');
+
+  // About Page Customization State
+  const [aboutHeroTitle, setAboutHeroTitle] = useState(settings.aboutHeroTitle || 'The World of Annex Couture');
+  const [aboutHeroSubtitle, setAboutHeroSubtitle] = useState(settings.aboutHeroSubtitle || 'Where Parisian haute couture heritage meets modern architectural power.');
+  const [aboutHeroImageUrl, setAboutHeroImageUrl] = useState(settings.aboutHeroImageUrl || '');
+  const [aboutPhilosophyTitle, setAboutPhilosophyTitle] = useState(settings.aboutPhilosophyTitle || 'Individually Sculpted to Accentuate Grace, Power, and Prestige');
+  const [aboutPhilosophyBody, setAboutPhilosophyBody] = useState(settings.aboutPhilosophyBody || '');
+  const [aboutCraftsmanshipImageUrl, setAboutCraftsmanshipImageUrl] = useState(settings.aboutCraftsmanshipImageUrl || '');
+  const [aboutPillars, setAboutPillars] = useState<AboutPillar[]>(
+    settings.aboutPillars && settings.aboutPillars.length === 3
+      ? settings.aboutPillars
+      : [
+          { title: 'Bespoke Fit Proportions', description: 'Every client\'s measurements are recorded to build a custom dress form, ensuring micro-millimeter precision fit.' },
+          { title: 'Ethical Sourcing', description: 'We partner exclusively with historic silk mills in Como, Italy and sustainable wool weavers in Huddersfield, England.' },
+          { title: 'White-Glove Dispatch', description: 'Garments are dispatched in padded garment bags with temperature-controlled shipping and worldwide courier tracking.' }
+        ]
+  );
 
   // Announcement & Contact State
   const [announcementActive, setAnnouncementActive] = useState(settings.announcementActive);
@@ -50,6 +67,14 @@ export default function AdminSettingsPage() {
 
   const handleCategoryChange = (index: number, field: keyof AtelierCategoryCard, value: string) => {
     setAtelierCategories((prev) => {
+      const updated = [...prev];
+      updated[index] = { ...updated[index], [field]: value };
+      return updated;
+    });
+  };
+
+  const handlePillarChange = (index: number, field: keyof AboutPillar, value: string) => {
+    setAboutPillars((prev) => {
       const updated = [...prev];
       updated[index] = { ...updated[index], [field]: value };
       return updated;
@@ -131,6 +156,13 @@ export default function AdminSettingsPage() {
       founderTitle,
       founderBio,
       founderPhotoUrl,
+      aboutHeroTitle,
+      aboutHeroSubtitle,
+      aboutHeroImageUrl,
+      aboutPhilosophyTitle,
+      aboutPhilosophyBody,
+      aboutCraftsmanshipImageUrl,
+      aboutPillars,
       announcementActive,
       contactEmail,
       contactPhone,
@@ -150,17 +182,17 @@ export default function AdminSettingsPage() {
             Storefront Banners & Brand Settings
           </h1>
           <p className="text-xs text-neutral-400">
-            Control brand identity logos, collection category tags, founder bio, hero photography, and "Explore The Atelier" cards.
+            Control brand identity logos, category tags, About page content/photography, founder bio, and storefront hero copy.
           </p>
         </div>
 
         <a
-          href="/"
+          href="/about"
           target="_blank"
           className="px-4 py-2 rounded-xl bg-noir-900 border border-gold-600/30 text-gold-300 text-xs uppercase font-semibold hover:bg-gold-500/10 flex items-center gap-2"
         >
-          <Eye className="w-3.5 h-3.5" />
-          <span>Live Storefront Preview</span>
+          <BookOpen className="w-3.5 h-3.5" />
+          <span>Preview About Page</span>
         </a>
       </div>
 
@@ -205,7 +237,7 @@ export default function AdminSettingsPage() {
           />
         </div>
 
-        {/* Section 0.5: DYNAMIC COLLECTION CATEGORIES MANAGER (NEW!) */}
+        {/* Section 0.5: DYNAMIC COLLECTION CATEGORIES MANAGER */}
         <div className="space-y-5 pb-6 border-b border-gold-600/15">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
@@ -307,6 +339,97 @@ export default function AdminSettingsPage() {
                 </div>
               );
             })}
+          </div>
+        </div>
+
+        {/* Section 0.8: ABOUT PAGE CONTENT & PHOTOGRAPHY MANAGER (NEW!) */}
+        <div className="space-y-6 pb-6 border-b border-gold-600/15">
+          <h3 className="font-serif text-lg text-neutral-100 font-medium flex items-center gap-2">
+            <BookOpen className="w-4 h-4 text-gold-400" />
+            <span>About Page Content & Photography Manager</span>
+          </h3>
+
+          <div className="space-y-4">
+            <div>
+              <label className="block text-xs font-medium text-neutral-300 mb-1">About Hero Headline</label>
+              <input
+                type="text"
+                value={aboutHeroTitle}
+                onChange={(e) => setAboutHeroTitle(e.target.value)}
+                placeholder="The World of Annex Couture"
+                className="w-full bg-noir-950 border border-gold-600/20 rounded-xl px-4 py-2.5 text-xs text-neutral-100 font-serif"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-medium text-neutral-300 mb-1">About Hero Subtitle</label>
+              <input
+                type="text"
+                value={aboutHeroSubtitle}
+                onChange={(e) => setAboutHeroSubtitle(e.target.value)}
+                className="w-full bg-noir-950 border border-gold-600/20 rounded-xl px-4 py-2.5 text-xs text-neutral-100"
+              />
+            </div>
+
+            <ImageUploader
+              value={aboutHeroImageUrl}
+              onChange={(val) => setAboutHeroImageUrl(val)}
+              label="About Page Hero Background Photography"
+            />
+          </div>
+
+          <div className="space-y-4 pt-2">
+            <div>
+              <label className="block text-xs font-medium text-neutral-300 mb-1">Atelier Philosophy Title</label>
+              <input
+                type="text"
+                value={aboutPhilosophyTitle}
+                onChange={(e) => setAboutPhilosophyTitle(e.target.value)}
+                className="w-full bg-noir-950 border border-gold-600/20 rounded-xl px-4 py-2.5 text-xs text-neutral-100 font-serif"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-medium text-neutral-300 mb-1">Atelier Philosophy Narrative Paragraph</label>
+              <textarea
+                rows={3}
+                value={aboutPhilosophyBody}
+                onChange={(e) => setAboutPhilosophyBody(e.target.value)}
+                className="w-full bg-noir-950 border border-gold-600/20 rounded-xl px-4 py-2.5 text-xs text-neutral-100"
+              />
+            </div>
+
+            <ImageUploader
+              value={aboutCraftsmanshipImageUrl}
+              onChange={(val) => setAboutCraftsmanshipImageUrl(val)}
+              label="Craftsmanship Spotlight Photography (Right column on /about page)"
+            />
+          </div>
+
+          {/* Pillars Editor */}
+          <div className="space-y-3 pt-2">
+            <label className="block text-xs font-medium text-gold-400 uppercase tracking-wider">3 Excellence Pillars</label>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {aboutPillars.map((pillar, idx) => (
+                <div key={idx} className="p-4 rounded-xl bg-noir-950 border border-gold-600/20 space-y-2">
+                  <span className="text-[10px] font-mono text-gold-400 block">Pillar #{idx + 1}</span>
+                  <input
+                    type="text"
+                    value={pillar.title}
+                    onChange={(e) => handlePillarChange(idx, 'title', e.target.value)}
+                    placeholder="Pillar Title"
+                    className="w-full bg-noir-900 border border-neutral-800 rounded-lg p-2 text-xs text-neutral-100 font-serif"
+                  />
+                  <textarea
+                    rows={3}
+                    value={pillar.description}
+                    onChange={(e) => handlePillarChange(idx, 'description', e.target.value)}
+                    placeholder="Pillar Description"
+                    className="w-full bg-noir-900 border border-neutral-800 rounded-lg p-2 text-xs text-neutral-100"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
