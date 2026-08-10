@@ -207,13 +207,20 @@ export const INITIAL_ATELIER_CATEGORIES: AtelierCategoryCard[] = [
 ];
 
 export const INITIAL_SETTINGS: StoreSettings = {
+  companyName: 'ANNEX',
+  companyTagline: 'COUTURE • PARIS',
+  brandLogoUrl: '/logo.png',
   heroTitle: 'HAUTE COUTURE & TAILORED SPLENDOR',
   heroSubtitle: 'Discover the new Autumn/Winter collection. Crafted by master artisans for the bold and iconic.',
   heroImageUrl: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=2000&q=90',
   marqueeText: '✦ FREE WORLDWIDE EXPRESS SHIPPING ON ORDERS OVER $1,000 ✦ BOOK A PRIVATE FIT APPOINTMENT IN PARIS & NY ✦ NEW AUTUMN HAUTE COUTURE LINE OUT NOW',
   brandStoryText: 'Annex Couture stands at the crossroads of timeless atelier craftsmanship and futuristic elegance. Every silhouette is individually sculpted to accentuate grace, power, and prestige.',
+  founderName: 'Ayoola Adebisi',
+  founderTitle: 'Founder & Creative Director',
+  founderBio: 'Envisioned by Ayoola Adebisi, Annex Couture bridges classical Parisian tailoring techniques with modern sculptural silhouettes. With a commitment to rare textiles, bespoke fits, and timeless prestige, Ayoola leads an international team of master artisans based in Paris and West Africa.',
+  founderPhotoUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80',
   announcementActive: true,
-  contactEmail: 'concierge@annexcouture.com',
+  contactEmail: 'ayoolaadebisi5@gmail.com',
   contactPhone: '+234 810 236 3541',
   address: '11, Avenue Rander Old road, Abeokuta, Ogun State Nigeria',
   atelierCategories: INITIAL_ATELIER_CATEGORIES

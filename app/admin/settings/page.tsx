@@ -5,16 +5,30 @@ import { useApp } from '@/lib/store';
 import ImageUploader from '@/components/admin/ImageUploader';
 import { ProductCategory, AtelierCategoryCard } from '@/lib/types';
 import { INITIAL_ATELIER_CATEGORIES } from '@/lib/data';
-import { Sliders, Save, Sparkles, Image as ImageIcon, MapPin, Mail, Phone, Eye, Grid, Edit3 } from 'lucide-react';
+import { Sliders, Save, Sparkles, Image as ImageIcon, MapPin, Mail, Phone, Eye, Grid, Plus, Trash2, User, Crown } from 'lucide-react';
 
 export default function AdminSettingsPage() {
-  const { settings, updateSettings, showToast } = useApp();
+  const { settings, updateSettings } = useApp();
 
+  // Brand Identity State
+  const [companyName, setCompanyName] = useState(settings.companyName || 'ANNEX');
+  const [companyTagline, setCompanyTagline] = useState(settings.companyTagline || 'COUTURE • PARIS');
+  const [brandLogoUrl, setBrandLogoUrl] = useState(settings.brandLogoUrl || '/logo.png');
+
+  // Hero State
   const [heroTitle, setHeroTitle] = useState(settings.heroTitle);
   const [heroSubtitle, setHeroSubtitle] = useState(settings.heroSubtitle);
   const [heroImageUrl, setHeroImageUrl] = useState(settings.heroImageUrl);
   const [marqueeText, setMarqueeText] = useState(settings.marqueeText);
   const [brandStoryText, setBrandStoryText] = useState(settings.brandStoryText);
+
+  // Founder Bio State
+  const [founderName, setFounderName] = useState(settings.founderName || 'Ayoola Adebisi');
+  const [founderTitle, setFounderTitle] = useState(settings.founderTitle || 'Founder & Creative Director');
+  const [founderBio, setFounderBio] = useState(settings.founderBio || '');
+  const [founderPhotoUrl, setFounderPhotoUrl] = useState(settings.founderPhotoUrl || '');
+
+  // Announcement & Contact State
   const [announcementActive, setAnnouncementActive] = useState(settings.announcementActive);
   const [contactEmail, setContactEmail] = useState(settings.contactEmail);
   const [contactPhone, setContactPhone] = useState(settings.contactPhone);
@@ -35,14 +49,42 @@ export default function AdminSettingsPage() {
     });
   };
 
+  const handleAddCategoryCard = () => {
+    const newCard: AtelierCategoryCard = {
+      id: `cat-${Date.now()}`,
+      title: 'New Collection Showcase',
+      subtitle: 'Luxury Apparel & Accessories',
+      image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80',
+      category: 'Haute Couture',
+    };
+    setAtelierCategories([...atelierCategories, newCard]);
+  };
+
+  const handleDeleteCategoryCard = (index: number) => {
+    if (atelierCategories.length <= 1) {
+      alert('You must keep at least 1 category showcase card on the homepage.');
+      return;
+    }
+    if (confirm(`Are you sure you want to delete Card #${index + 1}?`)) {
+      setAtelierCategories(atelierCategories.filter((_, i) => i !== index));
+    }
+  };
+
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
     updateSettings({
+      companyName,
+      companyTagline,
+      brandLogoUrl,
       heroTitle,
       heroSubtitle,
       heroImageUrl,
       marqueeText,
       brandStoryText,
+      founderName,
+      founderTitle,
+      founderBio,
+      founderPhotoUrl,
       announcementActive,
       contactEmail,
       contactPhone,
@@ -61,7 +103,7 @@ export default function AdminSettingsPage() {
             Storefront Banners & Brand Settings
           </h1>
           <p className="text-xs text-neutral-400">
-            Control homepage hero background photography, "Explore The Atelier" category showcase cards, marquee ticker, and contact details.
+            Control brand identity logos, founder bio, homepage hero photography, "Explore The Atelier" category showcase cards, and contact details.
           </p>
         </div>
 
@@ -77,6 +119,45 @@ export default function AdminSettingsPage() {
 
       <form onSubmit={handleSave} className="space-y-8 bg-noir-900 border border-gold-600/20 rounded-3xl p-6 sm:p-8 shadow-2xl">
         
+        {/* Section 0: Brand Identity & Logo Settings */}
+        <div className="space-y-5 pb-6 border-b border-gold-600/15">
+          <h3 className="font-serif text-lg text-neutral-100 font-medium flex items-center gap-2">
+            <Crown className="w-4 h-4 text-gold-400" />
+            <span>Brand Identity & Logo Configuration</span>
+          </h3>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs font-medium text-neutral-300 mb-1">Company Name</label>
+              <input
+                type="text"
+                required
+                value={companyName}
+                onChange={(e) => setCompanyName(e.target.value)}
+                placeholder="ANNEX"
+                className="w-full bg-noir-950 border border-gold-600/20 rounded-xl px-4 py-2.5 text-xs text-neutral-100 focus:outline-none focus:border-gold-400 font-serif text-base"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-medium text-neutral-300 mb-1">Sub-tagline / Subtitle</label>
+              <input
+                type="text"
+                value={companyTagline}
+                onChange={(e) => setCompanyTagline(e.target.value)}
+                placeholder="COUTURE • PARIS"
+                className="w-full bg-noir-950 border border-gold-600/20 rounded-xl px-4 py-2.5 text-xs text-neutral-100 focus:outline-none focus:border-gold-400"
+              />
+            </div>
+          </div>
+
+          <ImageUploader
+            value={brandLogoUrl}
+            onChange={(val) => setBrandLogoUrl(val)}
+            label="Official Brand Logo Mark (Upload file or enter URL)"
+          />
+        </div>
+
         {/* Section 1: Announcement Marquee Bar */}
         <div className="space-y-4 pb-6 border-b border-gold-600/15">
           <div className="flex items-center justify-between">
@@ -135,7 +216,6 @@ export default function AdminSettingsPage() {
             />
           </div>
 
-          {/* Image Uploader for Hero Background Photography */}
           <ImageUploader
             value={heroImageUrl}
             onChange={(val) => setHeroImageUrl(val)}
@@ -143,22 +223,44 @@ export default function AdminSettingsPage() {
           />
         </div>
 
-        {/* Section 3: "Explore The Atelier" Category Showcase Manager */}
+        {/* Section 3: "Explore The Atelier" Category Showcase Manager (WITH ADD / DELETE CARDS) */}
         <div className="space-y-6 pb-6 border-b border-gold-600/15">
-          <div className="flex items-center justify-between">
-            <h3 className="font-serif text-lg text-neutral-100 font-medium flex items-center gap-2">
-              <Grid className="w-4 h-4 text-gold-400" />
-              <span>Explore The Atelier Category Showcase Manager</span>
-            </h3>
-            <span className="text-[11px] text-gold-400 uppercase font-semibold">4 Homepage Cards</span>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h3 className="font-serif text-lg text-neutral-100 font-medium flex items-center gap-2">
+                <Grid className="w-4 h-4 text-gold-400" />
+                <span>Explore The Atelier Category Showcase Manager</span>
+              </h3>
+              <p className="text-xs text-neutral-400">Add, delete, or re-order showcase cards appearing on the homepage.</p>
+            </div>
+
+            <button
+              type="button"
+              onClick={handleAddCategoryCard}
+              className="gold-shimmer-btn px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-md shrink-0"
+            >
+              <Plus className="w-4 h-4" />
+              <span>Add New Card</span>
+            </button>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {atelierCategories.map((card, idx) => (
-              <div key={card.id || idx} className="p-5 rounded-2xl bg-noir-950 border border-gold-600/20 space-y-4">
-                <div className="flex justify-between items-center border-b border-white/5 pb-2">
+              <div key={card.id || idx} className="p-5 rounded-2xl bg-noir-950 border border-gold-600/20 space-y-4 relative">
+                
+                <div className="flex justify-between items-center border-b border-white/5 pb-3">
                   <span className="text-xs font-serif font-medium text-gold-400">Card #{idx + 1}: {card.title}</span>
-                  <span className="text-[10px] text-neutral-500 font-mono">Category: {card.category}</span>
+                  
+                  {/* Delete Card Button */}
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteCategoryCard(idx)}
+                    className="p-1.5 rounded-lg text-neutral-400 hover:text-red-400 hover:bg-red-950/40 transition-colors flex items-center gap-1 text-[11px]"
+                    title="Delete Category Card"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                    <span>Delete</span>
+                  </button>
                 </div>
 
                 <div>
@@ -206,7 +308,56 @@ export default function AdminSettingsPage() {
           </div>
         </div>
 
-        {/* Section 4: Brand Narrative & Atelier Contact */}
+        {/* Section 4: Founder & Creative Director Bio Section */}
+        <div className="space-y-4 pb-6 border-b border-gold-600/15">
+          <h3 className="font-serif text-lg text-neutral-100 font-medium flex items-center gap-2">
+            <User className="w-4 h-4 text-gold-400" />
+            <span>Founder & Creative Director Bio Configuration</span>
+          </h3>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs font-medium text-neutral-300 mb-1">Founder / Owner Name</label>
+              <input
+                type="text"
+                value={founderName}
+                onChange={(e) => setFounderName(e.target.value)}
+                placeholder="Ayoola Adebisi"
+                className="w-full bg-noir-950 border border-gold-600/20 rounded-xl px-4 py-2.5 text-xs text-neutral-100 focus:outline-none focus:border-gold-400"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-medium text-neutral-300 mb-1">Title / Designation</label>
+              <input
+                type="text"
+                value={founderTitle}
+                onChange={(e) => setFounderTitle(e.target.value)}
+                placeholder="Founder & Creative Director"
+                className="w-full bg-noir-950 border border-gold-600/20 rounded-xl px-4 py-2.5 text-xs text-neutral-100 focus:outline-none focus:border-gold-400"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-xs font-medium text-neutral-300 mb-1">Founder Bio Narrative (Displays on /about page)</label>
+            <textarea
+              rows={4}
+              value={founderBio}
+              onChange={(e) => setFounderBio(e.target.value)}
+              placeholder="Write story of the founder and creative vision..."
+              className="w-full bg-noir-950 border border-gold-600/20 rounded-xl px-4 py-2.5 text-xs text-neutral-100 focus:outline-none focus:border-gold-400"
+            />
+          </div>
+
+          <ImageUploader
+            value={founderPhotoUrl}
+            onChange={(val) => setFounderPhotoUrl(val)}
+            label="Founder Portrait Photo (Upload file or enter URL)"
+          />
+        </div>
+
+        {/* Section 5: Brand Narrative & Atelier Contact */}
         <div className="space-y-4 pb-6 border-b border-gold-600/15">
           <h3 className="font-serif text-lg text-neutral-100 font-medium">Brand Story & Concierge Info</h3>
 

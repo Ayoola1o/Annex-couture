@@ -20,7 +20,7 @@ export default function Navbar() {
     { name: 'Collections', href: '/shop' },
     { name: 'Haute Couture', href: '/shop?category=Haute+Couture' },
     { name: 'Custom Tailoring', href: '/custom-order' },
-    { name: 'Atelier Story', href: '/#story' },
+    { name: 'About', href: '/about' },
   ];
 
   const isNavActive = (href: string) => {
@@ -61,20 +61,20 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* Brand Logo */}
+          {/* Brand Logo & Title */}
           <div className="flex-1 lg:flex-none text-center lg:text-left">
             <Link href="/" className="inline-flex items-center gap-3 group">
               <img
-                src="/logo.png"
-                alt="Annex Couture Logo"
+                src={settings.brandLogoUrl || '/logo.png'}
+                alt={settings.companyName || 'Annex Couture Logo'}
                 className="h-11 sm:h-12 w-auto object-contain group-hover:scale-105 transition-transform drop-shadow-[0_0_10px_rgba(234,179,8,0.2)]"
               />
               <div className="hidden sm:block text-left">
                 <span className="font-serif text-xl sm:text-2xl tracking-[0.2em] font-light text-neutral-100 group-hover:text-gold-400 transition-colors block leading-none">
-                  ANNEX
+                  {settings.companyName || 'ANNEX'}
                 </span>
                 <span className="block text-[8px] tracking-[0.35em] text-gold-500 font-sans uppercase font-semibold mt-0.5">
-                  Couture • Paris
+                  {settings.companyTagline || 'COUTURE • PARIS'}
                 </span>
               </div>
             </Link>
@@ -167,8 +167,12 @@ export default function Navbar() {
             <div>
               <div className="flex items-center justify-between border-b border-gold-600/20 pb-4">
                 <div>
-                  <span className="font-serif text-xl tracking-[0.2em] font-light text-neutral-100">ANNEX</span>
-                  <span className="block text-[8px] tracking-[0.3em] text-gold-500 font-sans uppercase">COUTURE</span>
+                  <span className="font-serif text-xl tracking-[0.2em] font-light text-neutral-100">
+                    {settings.companyName || 'ANNEX'}
+                  </span>
+                  <span className="block text-[8px] tracking-[0.3em] text-gold-500 font-sans uppercase">
+                    {settings.companyTagline || 'COUTURE'}
+                  </span>
                 </div>
                 <button
                   onClick={() => setMobileMenuOpen(false)}
@@ -195,7 +199,7 @@ export default function Navbar() {
 
             <div className="pt-6 border-t border-gold-600/20">
               <p className="text-[10px] text-center text-neutral-500">
-                © {new Date().getFullYear()} Annex Couture Paris. All rights reserved.
+                © {new Date().getFullYear()} {settings.companyName || 'Annex Couture'}. All rights reserved.
               </p>
             </div>
           </div>

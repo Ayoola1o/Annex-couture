@@ -19,7 +19,7 @@ export interface Product {
 }
 
 export interface CartItem {
-  id: string; // unique cart item id (product.id + size + color)
+  id: string;
   product: Product;
   selectedSize: string;
   selectedColor: string;
@@ -72,11 +72,18 @@ export interface AtelierCategoryCard {
 }
 
 export interface StoreSettings {
+  companyName: string;
+  companyTagline: string;
+  brandLogoUrl: string;
   heroTitle: string;
   heroSubtitle: string;
   heroImageUrl: string;
   marqueeText: string;
   brandStoryText: string;
+  founderName: string;
+  founderTitle: string;
+  founderBio: string;
+  founderPhotoUrl: string;
   announcementActive: boolean;
   contactEmail: string;
   contactPhone: string;
