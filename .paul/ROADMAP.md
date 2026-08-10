@@ -43,7 +43,12 @@
 - [x] Add "Explore The Atelier Category Showcase Manager" card inside Admin Settings (`app/admin/settings/page.tsx`).
 - [x] Render dynamic category cards on homepage landing (`app/page.tsx`).
 
-### Phase 8: Future Enhancements (PLANNED)
+### Phase 8: Official AC Monogram Logo & Favicon Integration (COMPLETED)
+- [x] Save official Annex Couture gold AC monogram logo (`public/logo.png`, `public/logo.jpg`).
+- [x] Configure browser favicon & Apple touch icon (`app/favicon.ico`, `app/icon.png`, `public/favicon.ico`).
+- [x] Update Navbar, Footer, Admin Login screen, and Admin Header to render official logo image.
+
+### Phase 9: Future Enhancements (PLANNED)
 - [ ] Connect real database persistence (Supabase / Prisma / Vercel Postgres).
 - [ ] Connect live payment gateway integration (Stripe / Paystack).
 - [ ] Email notification trigger on order submission.
