@@ -55,7 +55,13 @@
 - [x] Add "➕ Add New Card" and "🗑️ Delete Card" controls to Explore The Atelier Section Manager (`app/admin/settings/page.tsx`).
 - [x] Add "About" link (`/about`) to header Navbar and Footer.
 
-### Phase 10: Future Enhancements (PLANNED)
+### Phase 10: Fix Admin Double Header & Hide Storefront Components (COMPLETED)
+- [x] Hide customer Navbar completely on `/admin` pages (`components/storefront/Navbar.tsx`).
+- [x] Hide customer Footer completely on `/admin` pages (`components/storefront/Footer.tsx`).
+- [x] Hide customer Mobile Bottom Dock completely on `/admin` pages (`components/storefront/MobileBottomDock.tsx`).
+- [x] Dock dedicated Admin Header at `sticky top-0` (`app/admin/layout.tsx`).
+
+### Phase 11: Future Enhancements (PLANNED)
 - [ ] Connect real database persistence (Supabase / Prisma / Vercel Postgres).
 - [ ] Connect live payment gateway integration (Stripe / Paystack).
 - [ ] Email notification trigger on order submission.
