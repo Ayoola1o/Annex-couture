@@ -28,7 +28,12 @@
 - [x] Add Mobile Card View Layout for Admin Products (`app/admin/products/page.tsx`).
 - [x] Add `predev` cache purge script to prevent Webpack chunk errors.
 
-### Phase 5: Future Enhancements (PLANNED)
+### Phase 5: Local Device Image Upload (COMPLETED)
+- [x] Build reusable `ImageUploader` component with device file picker + Base64 converter (`components/admin/ImageUploader.tsx`).
+- [x] Integrate local device file upload into Product Catalog Manager (`app/admin/products/page.tsx`).
+- [x] Integrate local device file upload into Hero Banner Settings (`app/admin/settings/page.tsx`).
+
+### Phase 6: Future Enhancements (PLANNED)
 - [ ] Connect real database persistence (Supabase / Prisma / Vercel Postgres).
 - [ ] Connect live payment gateway integration (Stripe / Paystack).
 - [ ] Email notification trigger on order submission.
