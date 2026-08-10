@@ -72,7 +72,12 @@
 - [x] Render dynamic About Hero, Philosophy, Craftsmanship photo, and Excellence Pillars on `/about` page.
 - [x] Implement real-time Total Sales Volume, Catalog Inventory Valuation, Average Order Value (AOV), and Category Revenue Breakdown on Admin Overview (`/admin`).
 
-### Phase 13: Future Enhancements (PLANNED)
+### Phase 13: Shop Collection Pagination (COMPLETED)
+- [x] Set maximum 12 products per page limit on `/shop` catalog page.
+- [x] Build luxury pagination navigation bar (`‹ Prev`, `1`, `2`, `Next ›`) with smooth window scrolling.
+- [x] Add automatic filter reset returning user to Page 1 on category/search/price/sort changes.
+
+### Phase 14: Future Enhancements (PLANNED)
 - [ ] Connect real database persistence (Supabase / Prisma / Vercel Postgres).
 - [ ] Connect live payment gateway integration (Stripe / Paystack).
 - [ ] Email notification trigger on order submission.
