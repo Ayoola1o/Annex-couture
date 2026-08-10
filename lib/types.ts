@@ -63,6 +63,14 @@ export interface BespokeRequest {
   createdAt: string;
 }
 
+export interface AtelierCategoryCard {
+  id: string;
+  title: string;
+  subtitle: string;
+  image: string;
+  category: ProductCategory;
+}
+
 export interface StoreSettings {
   heroTitle: string;
   heroSubtitle: string;
@@ -73,4 +81,5 @@ export interface StoreSettings {
   contactEmail: string;
   contactPhone: string;
   address: string;
+  atelierCategories: AtelierCategoryCard[];
 }

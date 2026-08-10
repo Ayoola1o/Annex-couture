@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useApp } from '@/lib/store';
+import { INITIAL_ATELIER_CATEGORIES } from '@/lib/data';
 import { Sparkles, ArrowRight, Scissors, Eye, ShoppingBag, Crown, Shield, Award, CheckCircle } from 'lucide-react';
 
 export default function HomePage() {
@@ -10,32 +11,9 @@ export default function HomePage() {
 
   const featuredProducts = products.filter((p) => p.isFeatured).slice(0, 4);
 
-  const categories = [
-    {
-      title: 'Haute Couture',
-      subtitle: 'One-of-a-Kind Atelier Masterpieces',
-      image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80',
-      category: 'Haute Couture',
-    },
-    {
-      title: 'Evening Gowns',
-      subtitle: 'Velvet & Silk Red Carpet Sculptures',
-      image: 'https://images.unsplash.com/photo-1566174053879-31528523f8ae?auto=format&fit=crop&w=800&q=80',
-      category: 'Evening Gowns',
-    },
-    {
-      title: 'Tailored Suits',
-      subtitle: 'Precision Italian Wool & Crest Lapels',
-      image: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&w=800&q=80',
-      category: 'Tailored Suits',
-    },
-    {
-      title: 'Ready to Wear',
-      subtitle: 'Contemporary Luxury Outerwear',
-      image: 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=800&q=80',
-      category: 'Ready to Wear',
-    },
-  ];
+  const categories = settings.atelierCategories && settings.atelierCategories.length > 0
+    ? settings.atelierCategories
+    : INITIAL_ATELIER_CATEGORIES;
 
   return (
     <div className="space-y-24 pb-20">
@@ -87,7 +65,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Featured Collections Showcase */}
+      {/* Featured Categories Showcase ("Explore The Atelier") */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         <div className="text-center space-y-3">
           <span className="text-xs uppercase tracking-[0.3em] text-gold-400 font-semibold block">Curated Categories</span>
@@ -100,7 +78,7 @@ export default function HomePage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {categories.map((cat) => (
             <Link
-              key={cat.title}
+              key={cat.id || cat.title}
               href={`/shop?category=${encodeURIComponent(cat.category)}`}
               className="group relative h-96 rounded-2xl overflow-hidden border border-gold-600/20 glass-panel-hover flex flex-col justify-end p-6"
             >

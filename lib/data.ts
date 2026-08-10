@@ -1,4 +1,4 @@
-import { Product, Order, BespokeRequest, StoreSettings } from './types';
+import { Product, Order, BespokeRequest, StoreSettings, AtelierCategoryCard } from './types';
 
 export const INITIAL_PRODUCTS: Product[] = [
   {
@@ -175,6 +175,37 @@ export const INITIAL_BESPOKE_REQUESTS: BespokeRequest[] = [
   }
 ];
 
+export const INITIAL_ATELIER_CATEGORIES: AtelierCategoryCard[] = [
+  {
+    id: 'cat-1',
+    title: 'Haute Couture',
+    subtitle: 'One-of-a-Kind Atelier Masterpieces',
+    image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80',
+    category: 'Haute Couture',
+  },
+  {
+    id: 'cat-2',
+    title: 'Evening Gowns',
+    subtitle: 'Velvet & Silk Red Carpet Sculptures',
+    image: 'https://images.unsplash.com/photo-1566174053879-31528523f8ae?auto=format&fit=crop&w=800&q=80',
+    category: 'Evening Gowns',
+  },
+  {
+    id: 'cat-3',
+    title: 'Tailored Suits',
+    subtitle: 'Precision Italian Wool & Crest Lapels',
+    image: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&w=800&q=80',
+    category: 'Tailored Suits',
+  },
+  {
+    id: 'cat-4',
+    title: 'Ready to Wear',
+    subtitle: 'Contemporary Luxury Outerwear',
+    image: 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=800&q=80',
+    category: 'Ready to Wear',
+  },
+];
+
 export const INITIAL_SETTINGS: StoreSettings = {
   heroTitle: 'HAUTE COUTURE & TAILORED SPLENDOR',
   heroSubtitle: 'Discover the new Autumn/Winter collection. Crafted by master artisans for the bold and iconic.',
@@ -183,6 +214,7 @@ export const INITIAL_SETTINGS: StoreSettings = {
   brandStoryText: 'Annex Couture stands at the crossroads of timeless atelier craftsmanship and futuristic elegance. Every silhouette is individually sculpted to accentuate grace, power, and prestige.',
   announcementActive: true,
   contactEmail: 'concierge@annexcouture.com',
-  contactPhone: '+1 (800) 987-ANNEX',
-  address: 'Atelier Annex, 45 Rue du Faubourg Saint-Honoré, Paris / 5th Ave New York'
+  contactPhone: '+234 810 236 3541',
+  address: '11, Avenue Rander Old road, Abeokuta, Ogun State Nigeria',
+  atelierCategories: INITIAL_ATELIER_CATEGORIES
 };

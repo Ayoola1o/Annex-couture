@@ -3,7 +3,9 @@
 import React, { useState } from 'react';
 import { useApp } from '@/lib/store';
 import ImageUploader from '@/components/admin/ImageUploader';
-import { Sliders, Save, Sparkles, Image as ImageIcon, MapPin, Mail, Phone, Eye } from 'lucide-react';
+import { ProductCategory, AtelierCategoryCard } from '@/lib/types';
+import { INITIAL_ATELIER_CATEGORIES } from '@/lib/data';
+import { Sliders, Save, Sparkles, Image as ImageIcon, MapPin, Mail, Phone, Eye, Grid, Edit3 } from 'lucide-react';
 
 export default function AdminSettingsPage() {
   const { settings, updateSettings, showToast } = useApp();
@@ -18,6 +20,21 @@ export default function AdminSettingsPage() {
   const [contactPhone, setContactPhone] = useState(settings.contactPhone);
   const [address, setAddress] = useState(settings.address);
 
+  // Category Cards State
+  const [atelierCategories, setAtelierCategories] = useState<AtelierCategoryCard[]>(
+    settings.atelierCategories && settings.atelierCategories.length > 0
+      ? settings.atelierCategories
+      : INITIAL_ATELIER_CATEGORIES
+  );
+
+  const handleCategoryChange = (index: number, field: keyof AtelierCategoryCard, value: string) => {
+    setAtelierCategories((prev) => {
+      const updated = [...prev];
+      updated[index] = { ...updated[index], [field]: value };
+      return updated;
+    });
+  };
+
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
     updateSettings({
@@ -30,11 +47,12 @@ export default function AdminSettingsPage() {
       contactEmail,
       contactPhone,
       address,
+      atelierCategories,
     });
   };
 
   return (
-    <div className="space-y-6 animate-fade-in max-w-4xl">
+    <div className="space-y-8 animate-fade-in max-w-4xl">
       
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-gold-600/15 pb-4">
@@ -43,7 +61,7 @@ export default function AdminSettingsPage() {
             Storefront Banners & Brand Settings
           </h1>
           <p className="text-xs text-neutral-400">
-            Control live storefront announcements, hero background photography, brand copy, and concierge contact info.
+            Control homepage hero background photography, "Explore The Atelier" category showcase cards, marquee ticker, and contact details.
           </p>
         </div>
 
@@ -57,7 +75,7 @@ export default function AdminSettingsPage() {
         </a>
       </div>
 
-      <form onSubmit={handleSave} className="space-y-6 bg-noir-900 border border-gold-600/20 rounded-3xl p-6 sm:p-8 shadow-2xl">
+      <form onSubmit={handleSave} className="space-y-8 bg-noir-900 border border-gold-600/20 rounded-3xl p-6 sm:p-8 shadow-2xl">
         
         {/* Section 1: Announcement Marquee Bar */}
         <div className="space-y-4 pb-6 border-b border-gold-600/15">
@@ -125,7 +143,70 @@ export default function AdminSettingsPage() {
           />
         </div>
 
-        {/* Section 3: Brand Narrative & Atelier Contact */}
+        {/* Section 3: "Explore The Atelier" Category Showcase Manager */}
+        <div className="space-y-6 pb-6 border-b border-gold-600/15">
+          <div className="flex items-center justify-between">
+            <h3 className="font-serif text-lg text-neutral-100 font-medium flex items-center gap-2">
+              <Grid className="w-4 h-4 text-gold-400" />
+              <span>Explore The Atelier Category Showcase Manager</span>
+            </h3>
+            <span className="text-[11px] text-gold-400 uppercase font-semibold">4 Homepage Cards</span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {atelierCategories.map((card, idx) => (
+              <div key={card.id || idx} className="p-5 rounded-2xl bg-noir-950 border border-gold-600/20 space-y-4">
+                <div className="flex justify-between items-center border-b border-white/5 pb-2">
+                  <span className="text-xs font-serif font-medium text-gold-400">Card #{idx + 1}: {card.title}</span>
+                  <span className="text-[10px] text-neutral-500 font-mono">Category: {card.category}</span>
+                </div>
+
+                <div>
+                  <label className="block text-[11px] text-neutral-300 mb-1">Card Title</label>
+                  <input
+                    type="text"
+                    value={card.title}
+                    onChange={(e) => handleCategoryChange(idx, 'title', e.target.value)}
+                    className="w-full bg-noir-900 border border-neutral-800 rounded-lg px-3 py-2 text-xs text-neutral-100 focus:border-gold-400 font-serif"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[11px] text-neutral-300 mb-1">Subtitle / Tagline</label>
+                  <input
+                    type="text"
+                    value={card.subtitle}
+                    onChange={(e) => handleCategoryChange(idx, 'subtitle', e.target.value)}
+                    className="w-full bg-noir-900 border border-neutral-800 rounded-lg px-3 py-2 text-xs text-neutral-100 focus:border-gold-400"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[11px] text-neutral-300 mb-1">Category Target Link</label>
+                  <select
+                    value={card.category}
+                    onChange={(e: any) => handleCategoryChange(idx, 'category', e.target.value)}
+                    className="w-full bg-noir-900 border border-neutral-800 rounded-lg px-3 py-2 text-xs text-neutral-100 focus:border-gold-400"
+                  >
+                    <option value="Haute Couture">Haute Couture</option>
+                    <option value="Ready to Wear">Ready to Wear</option>
+                    <option value="Evening Gowns">Evening Gowns</option>
+                    <option value="Tailored Suits">Tailored Suits</option>
+                    <option value="Luxury Accessories">Luxury Accessories</option>
+                  </select>
+                </div>
+
+                <ImageUploader
+                  value={card.image}
+                  onChange={(val) => handleCategoryChange(idx, 'image', val)}
+                  label={`Card #${idx + 1} Cover Photography`}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Section 4: Brand Narrative & Atelier Contact */}
         <div className="space-y-4 pb-6 border-b border-gold-600/15">
           <h3 className="font-serif text-lg text-neutral-100 font-medium">Brand Story & Concierge Info</h3>
 
