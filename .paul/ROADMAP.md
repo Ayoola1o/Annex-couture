@@ -38,7 +38,12 @@
 - [x] Remove Admin tab from sticky mobile bottom dock (`components/storefront/MobileBottomDock.tsx`).
 - [x] Remove newsletter card block and Brand Portal footer column from footer (`components/storefront/Footer.tsx`).
 
-### Phase 7: Future Enhancements (PLANNED)
+### Phase 7: Editable "Explore The Atelier" Category Showcase (COMPLETED)
+- [x] Add `AtelierCategoryCard` interface and seed initial default cards (`lib/types.ts` & `lib/data.ts`).
+- [x] Add "Explore The Atelier Category Showcase Manager" card inside Admin Settings (`app/admin/settings/page.tsx`).
+- [x] Render dynamic category cards on homepage landing (`app/page.tsx`).
+
+### Phase 8: Future Enhancements (PLANNED)
 - [ ] Connect real database persistence (Supabase / Prisma / Vercel Postgres).
 - [ ] Connect live payment gateway integration (Stripe / Paystack).
 - [ ] Email notification trigger on order submission.
