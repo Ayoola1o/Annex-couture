@@ -67,7 +67,12 @@
 - [x] Implement safe product reassignment when deleting a category so zero products are lost.
 - [x] Render dynamic categories on `/shop` pills, Product Manager dropdowns, and Footer links.
 
-### Phase 12: Future Enhancements (PLANNED)
+### Phase 12: Editable About Page & Real-Time Sales Revenue Analytics (COMPLETED)
+- [x] Add About Page Content & Photography Manager in Admin Settings (`app/admin/settings/page.tsx`).
+- [x] Render dynamic About Hero, Philosophy, Craftsmanship photo, and Excellence Pillars on `/about` page.
+- [x] Implement real-time Total Sales Volume, Catalog Inventory Valuation, Average Order Value (AOV), and Category Revenue Breakdown on Admin Overview (`/admin`).
+
+### Phase 13: Future Enhancements (PLANNED)
 - [ ] Connect real database persistence (Supabase / Prisma / Vercel Postgres).
 - [ ] Connect live payment gateway integration (Stripe / Paystack).
 - [ ] Email notification trigger on order submission.
