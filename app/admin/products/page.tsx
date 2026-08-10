@@ -3,7 +3,8 @@
 import React, { useState } from 'react';
 import { useApp } from '@/lib/store';
 import { Product, ProductCategory } from '@/lib/types';
-import { Package, Plus, Search, Edit, Trash2, Star, Check, X, Sparkles, Image as ImageIcon } from 'lucide-react';
+import ImageUploader from '@/components/admin/ImageUploader';
+import { Package, Plus, Search, Edit, Trash2, Star, Check, X, Sparkles } from 'lucide-react';
 
 export default function AdminProductsPage() {
   const { products, addProduct, updateProduct, deleteProduct } = useApp();
@@ -151,7 +152,7 @@ export default function AdminProductsPage() {
             Product Catalog Manager
           </h1>
           <p className="text-xs text-neutral-400">
-            Populate apparel items, adjust pricing, manage inventory stock, and set homepage featured pieces.
+            Populate apparel items, adjust pricing, upload device photos, manage stock, and set featured pieces.
           </p>
         </div>
 
@@ -354,7 +355,7 @@ export default function AdminProductsPage() {
         </div>
       </div>
 
-      {/* Add / Edit Product Modal */}
+      {/* Add / Edit Product Modal with ImageUploader */}
       {isAddModalOpen && (
         <div className="fixed inset-0 z-50 overflow-y-auto p-4 flex items-center justify-center">
           <div className="fixed inset-0 bg-noir-950/80 backdrop-blur-sm" onClick={() => setIsAddModalOpen(false)} />
@@ -370,7 +371,7 @@ export default function AdminProductsPage() {
               </button>
             </div>
 
-            <form onSubmit={handleSave} className="space-y-4 text-xs">
+            <form onSubmit={handleSave} className="space-y-5 text-xs">
               <div>
                 <label className="block font-medium text-neutral-300 mb-1">Product Title *</label>
                 <input
@@ -412,17 +413,12 @@ export default function AdminProductsPage() {
                 </div>
               </div>
 
-              <div>
-                <label className="block font-medium text-neutral-300 mb-1">High-Res Image URL *</label>
-                <input
-                  type="url"
-                  required
-                  value={formData.image}
-                  onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                  placeholder="https://images.unsplash.com/..."
-                  className="w-full bg-noir-950 border border-gold-600/20 rounded-xl px-4 py-2.5 text-neutral-100 focus:outline-none focus:border-gold-400 font-mono"
-                />
-              </div>
+              {/* Image Uploader Component (Upload from device or Link URL) */}
+              <ImageUploader
+                value={formData.image}
+                onChange={(imgVal) => setFormData({ ...formData, image: imgVal })}
+                label="Product Image Photo"
+              />
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>

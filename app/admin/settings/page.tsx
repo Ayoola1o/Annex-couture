@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useApp } from '@/lib/store';
+import ImageUploader from '@/components/admin/ImageUploader';
 import { Sliders, Save, Sparkles, Image as ImageIcon, MapPin, Mail, Phone, Eye } from 'lucide-react';
 
 export default function AdminSettingsPage() {
@@ -42,7 +43,7 @@ export default function AdminSettingsPage() {
             Storefront Banners & Brand Settings
           </h1>
           <p className="text-xs text-neutral-400">
-            Control live storefront announcements, hero background photography, brand copy, and contact concierge info.
+            Control live storefront announcements, hero background photography, brand copy, and concierge contact info.
           </p>
         </div>
 
@@ -116,20 +117,12 @@ export default function AdminSettingsPage() {
             />
           </div>
 
-          <div>
-            <label className="block text-xs font-medium text-neutral-300 mb-1">Hero Background Photography URL</label>
-            <input
-              type="url"
-              value={heroImageUrl}
-              onChange={(e) => setHeroImageUrl(e.target.value)}
-              className="w-full bg-noir-950 border border-gold-600/20 rounded-xl px-4 py-2.5 text-xs text-neutral-100 focus:outline-none focus:border-gold-400 font-mono"
-            />
-            {heroImageUrl && (
-              <div className="mt-2 h-28 rounded-xl overflow-hidden border border-gold-600/20">
-                <img src={heroImageUrl} alt="Hero Banner Preview" className="w-full h-full object-cover" />
-              </div>
-            )}
-          </div>
+          {/* Image Uploader for Hero Background Photography */}
+          <ImageUploader
+            value={heroImageUrl}
+            onChange={(val) => setHeroImageUrl(val)}
+            label="Hero Background Photography"
+          />
         </div>
 
         {/* Section 3: Brand Narrative & Atelier Contact */}
