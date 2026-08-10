@@ -4,11 +4,11 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useApp } from '@/lib/store';
-import { Home, Compass, Scissors, ShoppingBag, Crown } from 'lucide-react';
+import { Home, Compass, Scissors, ShoppingBag } from 'lucide-react';
 
 export default function MobileBottomDock() {
   const pathname = usePathname();
-  const { cart, setIsCartOpen, isAdminLoggedIn } = useApp();
+  const { cart, setIsCartOpen } = useApp();
 
   const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
 
@@ -17,7 +17,6 @@ export default function MobileBottomDock() {
     { name: 'Shop', href: '/shop', icon: Compass },
     { name: 'Bespoke', href: '/custom-order', icon: Scissors },
     { name: 'Bag', href: '#cart', icon: ShoppingBag, isBag: true },
-    { name: 'Admin', href: '/admin', icon: Crown },
   ];
 
   const isNavActive = (href: string) => {

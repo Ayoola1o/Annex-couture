@@ -4,11 +4,11 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useApp } from '@/lib/store';
-import { ShoppingBag, Menu, X, Search, Crown, Sparkles, ChevronRight } from 'lucide-react';
+import { ShoppingBag, Menu, X, Search, Sparkles, ChevronRight } from 'lucide-react';
 
 export default function Navbar() {
   const pathname = usePathname();
-  const { cart, setIsCartOpen, settings, isAdminLoggedIn } = useApp();
+  const { cart, setIsCartOpen, settings } = useApp();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -101,19 +101,6 @@ export default function Navbar() {
               <Search className="w-5 h-5" />
             </button>
 
-            {/* Admin Dashboard Quick Access Button */}
-            <Link
-              href="/admin"
-              className={`hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all border ${
-                isAdminLoggedIn
-                  ? 'bg-gold-500/20 text-gold-300 border-gold-500/50 hover:bg-gold-500/30'
-                  : 'bg-white/5 text-neutral-300 border-neutral-700 hover:border-gold-500/40 hover:text-gold-300'
-              }`}
-            >
-              <Crown className="w-3.5 h-3.5 text-gold-400" />
-              <span>{isAdminLoggedIn ? 'Admin Active' : 'Brand Admin'}</span>
-            </Link>
-
             {/* Shopping Bag Drawer Button */}
             <button
               onClick={() => setIsCartOpen(true)}
@@ -199,15 +186,7 @@ export default function Navbar() {
               </nav>
             </div>
 
-            <div className="space-y-4 pt-6 border-t border-gold-600/20">
-              <Link
-                href="/admin"
-                onClick={() => setMobileMenuOpen(false)}
-                className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-gold-600/10 border border-gold-500/30 text-gold-300 font-medium text-xs uppercase tracking-widest hover:bg-gold-500/20 transition-all"
-              >
-                <Crown className="w-4 h-4 text-gold-400" />
-                <span>Brand Admin Portal</span>
-              </Link>
+            <div className="pt-6 border-t border-gold-600/20">
               <p className="text-[10px] text-center text-neutral-500">
                 © {new Date().getFullYear()} Annex Couture Paris. All rights reserved.
               </p>
