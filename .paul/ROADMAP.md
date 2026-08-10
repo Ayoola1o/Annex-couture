@@ -48,7 +48,14 @@
 - [x] Configure browser favicon & Apple touch icon (`app/favicon.ico`, `app/icon.png`, `public/favicon.ico`).
 - [x] Update Navbar, Footer, Admin Login screen, and Admin Header to render official logo image.
 
-### Phase 9: Future Enhancements (PLANNED)
+### Phase 9: About Page, Owner Bio, Dynamic Brand Logo & Add/Delete Cards (COMPLETED)
+- [x] Create Brand About & Founder Bio page (`app/about/page.tsx`).
+- [x] Add Brand Identity Editor (Company Name, Tagline, Brand Logo Uploader) in Admin Settings (`app/admin/settings/page.tsx`).
+- [x] Add Founder & Creative Director Bio Editor in Admin Settings (`app/admin/settings/page.tsx`).
+- [x] Add "➕ Add New Card" and "🗑️ Delete Card" controls to Explore The Atelier Section Manager (`app/admin/settings/page.tsx`).
+- [x] Add "About" link (`/about`) to header Navbar and Footer.
+
+### Phase 10: Future Enhancements (PLANNED)
 - [ ] Connect real database persistence (Supabase / Prisma / Vercel Postgres).
 - [ ] Connect live payment gateway integration (Stripe / Paystack).
 - [ ] Email notification trigger on order submission.
