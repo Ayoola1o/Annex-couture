@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Product, CartItem, Order, BespokeRequest, StoreSettings, ProductCategory } from './types';
-import { INITIAL_PRODUCTS, INITIAL_ORDERS, INITIAL_BESPOKE_REQUESTS, INITIAL_SETTINGS } from './data';
+import { INITIAL_PRODUCTS, INITIAL_ORDERS, INITIAL_BESPOKE_REQUESTS, INITIAL_SETTINGS, INITIAL_CATEGORIES } from './data';
 
 interface AppContextType {
   // Products
@@ -10,6 +10,12 @@ interface AppContextType {
   addProduct: (product: Omit<Product, 'id'>) => void;
   updateProduct: (id: string, updated: Partial<Product>) => void;
   deleteProduct: (id: string) => void;
+
+  // Categories Management
+  categories: string[];
+  addCategory: (categoryName: string) => void;
+  renameCategory: (oldName: string, newName: string) => void;
+  deleteCategory: (categoryName: string, reassignToCategory: string) => void;
   
   // Cart
   cart: CartItem[];
@@ -54,6 +60,7 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 export function AppProvider({ children }: { children: React.ReactNode }) {
   // Load initial states with localStorage hydration fallback
   const [products, setProducts] = useState<Product[]>(INITIAL_PRODUCTS);
+  const [categories, setCategories] = useState<string[]>(INITIAL_CATEGORIES);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [orders, setOrders] = useState<Order[]>(INITIAL_ORDERS);
@@ -68,6 +75,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     try {
       const savedProducts = localStorage.getItem('annex_products');
       if (savedProducts) setProducts(JSON.parse(savedProducts));
+
+      const savedCategories = localStorage.getItem('annex_categories');
+      if (savedCategories) setCategories(JSON.parse(savedCategories));
 
       const savedCart = localStorage.getItem('annex_cart');
       if (savedCart) setCart(JSON.parse(savedCart));
@@ -128,6 +138,67 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     setProducts(updated);
     saveLocal('annex_products', updated);
     showToast('Product removed from catalog.');
+  };
+
+  // Category Management CRUD
+  const addCategory = (categoryName: string) => {
+    const trimmed = categoryName.trim();
+    if (!trimmed) return;
+    if (categories.includes(trimmed)) {
+      showToast(`Category "${trimmed}" already exists.`);
+      return;
+    }
+    const updatedCats = [...categories, trimmed];
+    setCategories(updatedCats);
+    saveLocal('annex_categories', updatedCats);
+
+    const updatedSettings = { ...settings, categories: updatedCats };
+    setSettings(updatedSettings);
+    saveLocal('annex_settings', updatedSettings);
+
+    showToast(`Category tag "${trimmed}" created.`);
+  };
+
+  const renameCategory = (oldName: string, newName: string) => {
+    const trimmed = newName.trim();
+    if (!trimmed || oldName === trimmed) return;
+
+    const updatedCats = categories.map((c) => (c === oldName ? trimmed : c));
+    setCategories(updatedCats);
+    saveLocal('annex_categories', updatedCats);
+
+    const updatedSettings = { ...settings, categories: updatedCats };
+    setSettings(updatedSettings);
+    saveLocal('annex_settings', updatedSettings);
+
+    // Automatically re-assign products under oldName to newName
+    const updatedProducts = products.map((p) => (p.category === oldName ? { ...p, category: trimmed } : p));
+    setProducts(updatedProducts);
+    saveLocal('annex_products', updatedProducts);
+
+    showToast(`Category "${oldName}" renamed to "${trimmed}" & products updated.`);
+  };
+
+  const deleteCategory = (categoryName: string, reassignToCategory: string) => {
+    if (categories.length <= 1) {
+      showToast('Cannot delete the only remaining category.');
+      return;
+    }
+
+    const updatedCats = categories.filter((c) => c !== categoryName);
+    setCategories(updatedCats);
+    saveLocal('annex_categories', updatedCats);
+
+    const updatedSettings = { ...settings, categories: updatedCats };
+    setSettings(updatedSettings);
+    saveLocal('annex_settings', updatedSettings);
+
+    // Automatically re-assign all products assigned to deleted category to reassignToCategory
+    const updatedProducts = products.map((p) => (p.category === categoryName ? { ...p, category: reassignToCategory } : p));
+    setProducts(updatedProducts);
+    saveLocal('annex_products', updatedProducts);
+
+    showToast(`Category "${categoryName}" removed. Products reassigned to "${reassignToCategory}".`);
   };
 
   // Cart operations
@@ -253,6 +324,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         addProduct,
         updateProduct,
         deleteProduct,
+        categories: categories && categories.length > 0 ? categories : INITIAL_CATEGORIES,
+        addCategory,
+        renameCategory,
+        deleteCategory,
         cart,
         addToCart,
         removeFromCart,
@@ -267,7 +342,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         bespokeRequests,
         createBespokeRequest,
         updateBespokeStatus,
-        settings,
+        settings: {
+          ...settings,
+          categories: categories && categories.length > 0 ? categories : INITIAL_CATEGORIES
+        },
         updateSettings,
         isAdminLoggedIn,
         adminLogin,

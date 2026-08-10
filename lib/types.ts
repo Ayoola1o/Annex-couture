@@ -1,4 +1,4 @@
-export type ProductCategory = 'Haute Couture' | 'Ready to Wear' | 'Evening Gowns' | 'Tailored Suits' | 'Luxury Accessories';
+export type ProductCategory = string;
 
 export interface Product {
   id: string;
@@ -88,5 +88,6 @@ export interface StoreSettings {
   contactEmail: string;
   contactPhone: string;
   address: string;
+  categories: string[];
   atelierCategories: AtelierCategoryCard[];
 }

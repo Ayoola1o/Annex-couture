@@ -1,5 +1,13 @@
 import { Product, Order, BespokeRequest, StoreSettings, AtelierCategoryCard } from './types';
 
+export const INITIAL_CATEGORIES: string[] = [
+  'Haute Couture',
+  'Ready to Wear',
+  'Evening Gowns',
+  'Tailored Suits',
+  'Luxury Accessories'
+];
+
 export const INITIAL_PRODUCTS: Product[] = [
   {
     id: 'annex-001',
@@ -223,5 +231,6 @@ export const INITIAL_SETTINGS: StoreSettings = {
   contactEmail: 'ayoolaadebisi5@gmail.com',
   contactPhone: '+234 810 236 3541',
   address: '11, Avenue Rander Old road, Abeokuta, Ogun State Nigeria',
+  categories: INITIAL_CATEGORIES,
   atelierCategories: INITIAL_ATELIER_CATEGORIES
 };

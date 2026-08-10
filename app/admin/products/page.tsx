@@ -7,7 +7,7 @@ import ImageUploader from '@/components/admin/ImageUploader';
 import { Package, Plus, Search, Edit, Trash2, Star, Check, X, Sparkles } from 'lucide-react';
 
 export default function AdminProductsPage() {
-  const { products, addProduct, updateProduct, deleteProduct } = useApp();
+  const { products, addProduct, updateProduct, deleteProduct, categories: storeCategories } = useApp();
 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -34,7 +34,7 @@ export default function AdminProductsPage() {
     description: '',
     price: 950,
     originalPrice: undefined,
-    category: 'Ready to Wear',
+    category: storeCategories[0] || 'Ready to Wear',
     sizes: 'XS, S, M, L, Bespoke Custom',
     colors: 'Obsidian Black, Gold',
     image: 'https://images.unsplash.com/photo-1566174053879-31528523f8ae?auto=format&fit=crop&w=1000&q=80',
@@ -45,7 +45,7 @@ export default function AdminProductsPage() {
     careInstructions: 'Specialist Dry Clean Only'
   });
 
-  const categories = ['All', 'Haute Couture', 'Ready to Wear', 'Evening Gowns', 'Tailored Suits', 'Luxury Accessories'];
+  const categoriesList = ['All', ...storeCategories];
 
   const filteredProducts = products.filter((p) => {
     const matchesCat = selectedCategory === 'All' || p.category === selectedCategory;
@@ -182,7 +182,7 @@ export default function AdminProductsPage() {
 
         {/* Category Filter Pills */}
         <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-1">
-          {categories.map((cat) => (
+          {categoriesList.map((cat) => (
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
@@ -392,11 +392,11 @@ export default function AdminProductsPage() {
                     onChange={(e: any) => setFormData({ ...formData, category: e.target.value })}
                     className="w-full bg-noir-950 border border-gold-600/20 rounded-xl px-4 py-2.5 text-neutral-100 focus:outline-none focus:border-gold-400"
                   >
-                    <option value="Haute Couture">Haute Couture</option>
-                    <option value="Ready to Wear">Ready to Wear</option>
-                    <option value="Evening Gowns">Evening Gowns</option>
-                    <option value="Tailored Suits">Tailored Suits</option>
-                    <option value="Luxury Accessories">Luxury Accessories</option>
+                    {storeCategories.map((c) => (
+                      <option key={c} value={c}>
+                        {c}
+                      </option>
+                    ))}
                   </select>
                 </div>
 

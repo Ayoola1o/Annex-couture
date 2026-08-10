@@ -52,11 +52,13 @@ export default function Footer() {
           <div className="space-y-3">
             <h4 className="font-serif text-sm text-neutral-100 font-medium tracking-wider uppercase">Collections</h4>
             <ul className="space-y-2 text-xs">
-              <li><Link href="/shop?category=Evening+Gowns" className="hover:text-gold-300 transition-colors">Evening Gowns</Link></li>
-              <li><Link href="/shop?category=Haute+Couture" className="hover:text-gold-300 transition-colors">Haute Couture</Link></li>
-              <li><Link href="/shop?category=Tailored+Suits" className="hover:text-gold-300 transition-colors">Tailored Suits</Link></li>
-              <li><Link href="/shop?category=Ready+to+Wear" className="hover:text-gold-300 transition-colors">Ready to Wear</Link></li>
-              <li><Link href="/shop?category=Luxury+Accessories" className="hover:text-gold-300 transition-colors">Luxury Accessories</Link></li>
+              {(settings.categories || []).slice(0, 6).map((cat) => (
+                <li key={cat}>
+                  <Link href={`/shop?category=${encodeURIComponent(cat)}`} className="hover:text-gold-300 transition-colors">
+                    {cat}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 

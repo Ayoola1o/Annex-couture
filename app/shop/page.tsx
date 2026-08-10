@@ -9,7 +9,7 @@ import { Search, SlidersHorizontal, Eye, ShoppingBag, Filter, X, ChevronDown, Ch
 
 function ShopContent() {
   const searchParams = useSearchParams();
-  const { products, setQuickViewProduct, addToCart } = useApp();
+  const { products, setQuickViewProduct, addToCart, categories: storeCategories } = useApp();
 
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -26,7 +26,7 @@ function ShopContent() {
     if (q) setSearchQuery(q);
   }, [searchParams]);
 
-  const categories = ['All', 'Haute Couture', 'Ready to Wear', 'Evening Gowns', 'Tailored Suits', 'Luxury Accessories'];
+  const categoriesList = ['All', ...storeCategories];
 
   // Filter logic
   const filteredProducts = products.filter((p) => {
@@ -62,7 +62,7 @@ function ShopContent() {
 
       {/* Category Tab Filter Pills (Scrollable on Desktop & Mobile) */}
       <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none justify-start lg:justify-center">
-        {categories.map((cat) => (
+        {categoriesList.map((cat) => (
           <button
             key={cat}
             onClick={() => setSelectedCategory(cat)}
