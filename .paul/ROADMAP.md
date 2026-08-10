@@ -61,7 +61,13 @@
 - [x] Hide customer Mobile Bottom Dock completely on `/admin` pages (`components/storefront/MobileBottomDock.tsx`).
 - [x] Dock dedicated Admin Header at `sticky top-0` (`app/admin/layout.tsx`).
 
-### Phase 11: Future Enhancements (PLANNED)
+### Phase 11: Dynamic Collection Categories Manager (COMPLETED)
+- [x] Add dynamic category state with `addCategory`, `renameCategory`, and `deleteCategory` (`lib/store.tsx`).
+- [x] Build Product Collection Categories Manager in Admin Settings (`app/admin/settings/page.tsx`).
+- [x] Implement safe product reassignment when deleting a category so zero products are lost.
+- [x] Render dynamic categories on `/shop` pills, Product Manager dropdowns, and Footer links.
+
+### Phase 12: Future Enhancements (PLANNED)
 - [ ] Connect real database persistence (Supabase / Prisma / Vercel Postgres).
 - [ ] Connect live payment gateway integration (Stripe / Paystack).
 - [ ] Email notification trigger on order submission.
