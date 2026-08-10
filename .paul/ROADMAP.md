@@ -33,7 +33,12 @@
 - [x] Integrate local device file upload into Product Catalog Manager (`app/admin/products/page.tsx`).
 - [x] Integrate local device file upload into Hero Banner Settings (`app/admin/settings/page.tsx`).
 
-### Phase 6: Future Enhancements (PLANNED)
+### Phase 6: Remove Admin Buttons & Newsletter Box (COMPLETED)
+- [x] Remove Admin gold badge button from header navbar and mobile drawer menu (`components/storefront/Navbar.tsx`).
+- [x] Remove Admin tab from sticky mobile bottom dock (`components/storefront/MobileBottomDock.tsx`).
+- [x] Remove newsletter card block and Brand Portal footer column from footer (`components/storefront/Footer.tsx`).
+
+### Phase 7: Future Enhancements (PLANNED)
 - [ ] Connect real database persistence (Supabase / Prisma / Vercel Postgres).
 - [ ] Connect live payment gateway integration (Stripe / Paystack).
 - [ ] Email notification trigger on order submission.
